@@ -197,7 +197,7 @@ $avatarUrl = $avatar ? '/uploads/avatars/' . basename($avatar) : '';
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Life Dashboards (PHP)</title>
+  <title>Overview+</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.snow.css">
   <style>
@@ -209,7 +209,7 @@ $avatarUrl = $avatar ? '/uploads/avatars/' . basename($avatar) : '';
 <body class="bg-light">
 <nav class="navbar navbar-expand navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">LifeDash PHP</a>
+    <a class="navbar-brand" href="/">Overview+</a>
     <div class="ms-auto d-flex align-items-center gap-3">
       <form class="d-flex align-items-center" method="post" action="/profile/avatar" enctype="multipart/form-data">
         <?php if ($avatarUrl): ?>
