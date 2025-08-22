@@ -34,7 +34,7 @@ $db->exec('CREATE TABLE IF NOT EXISTS journal_entries (
   entry_date TEXT NOT NULL,
   title TEXT,
   content TEXT,
-  created_at INTEGER NOT NULL DEFAULT (strftime("%s","now"))
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 )');
 $db->exec('CREATE UNIQUE INDEX IF NOT EXISTS idx_journal_unique ON journal_entries(user_id, entry_date, title)');
 $db->exec('CREATE TABLE IF NOT EXISTS todos (
@@ -42,7 +42,7 @@ $db->exec('CREATE TABLE IF NOT EXISTS todos (
   user_id INTEGER NOT NULL DEFAULT 1,
   label TEXT NOT NULL,
   is_done INTEGER NOT NULL DEFAULT 0,
-  created_at INTEGER NOT NULL DEFAULT (strftime("%s","now"))
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 )');
 $db->exec('CREATE TABLE IF NOT EXISTS habit_logs (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -50,7 +50,7 @@ $db->exec('CREATE TABLE IF NOT EXISTS habit_logs (
   habit_name TEXT NOT NULL,
   log_date TEXT NOT NULL,
   completed INTEGER NOT NULL DEFAULT 1,
-  created_at INTEGER NOT NULL DEFAULT (strftime("%s","now"))
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 )');
 $db->exec('CREATE TABLE IF NOT EXISTS files (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -60,7 +60,7 @@ $db->exec('CREATE TABLE IF NOT EXISTS files (
   mime_type TEXT,
   size_bytes INTEGER,
   stored_path TEXT NOT NULL,
-  created_at INTEGER NOT NULL DEFAULT (strftime("%s","now"))
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 )');
 
 // Helpers
@@ -90,7 +90,7 @@ if ($path === '/api/heatmap') {
   $stmt->execute([$start]);
   $j = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
   // Todo counts by created day
-  $stmt = $db->prepare('SELECT date(datetime(created_at, "unixepoch")) as d, COUNT(*) as c FROM todos WHERE created_at >= strftime("%s", ?) GROUP BY d');
+  $stmt = $db->prepare('SELECT date(created_at) as d, COUNT(*) as c FROM todos WHERE date(created_at) >= ? GROUP BY d');
   $stmt->execute([$start]);
   $t = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
   // Habit logs by date
